@@ -117,12 +117,12 @@ def prop_FC(csp, newVar=None):
                 
                 #if vals assignments don't satisfy constraint c
                 if not c.check(vals):
-                    #if d is in current domain (of v) && v not yet pruned
+                    #if d is in v's domain && v not yet pruned
                     if (v.in_cur_domain(d)) and ((v, d) not in pruned):
                         #prune d from current domain (of v)
                         v.prune_value(d)
                         pruned.append((v, d))
-                    
+
                 #unassign d
                 v.unassign()
                     
@@ -145,25 +145,21 @@ def prop_GAC(csp, newVar=None):
 
     # TODO! IMPLEMENT THIS!
     pruned = []
-    GACqueue = [] #keep track of inconsistent arcs
     
     if newVar: #check constraints containing newVar
         constraints = csp.get_cons_with_var(newVar)
     else: #check all constraints
         constraints = csp.get_all_cons()
 
-    #loop through list of constraints
+    #find constraints whose scope contains v
     for c in constraints:
-
-        #loop through scope: list of [vars that constraint c is over]
         for v in c.get_scope():
         
             #loop through list of [vals in current domain of v]
             for d in v.cur_domain():
 
                 #test if (var, val) pair has supporting tuple in c
-                satisfies = c.has_support(v, d)
-                if not satisfies: #prune d from current domain (of v)
+                if not c.has_support(v, d): #prune d from current domain (of v)
                     
                     #if d is in current domain (of v) && v not yet pruned
                     if (v.in_cur_domain(d)) and ((v, d) not in pruned):
@@ -174,45 +170,4 @@ def prop_GAC(csp, newVar=None):
                     return False, pruned
 
     return True, pruned
-'''
-pruned = []
-    GACq = [] #keep track of inconsistent arcs
-    
-    if newVar: #check constraints containing newVar
-        constraints = csp.get_cons_with_var(newVar)
-else: #check all constraints
-    constraints = csp.get_all_cons()
-    
-    #pick an unassigned variable
-    for v in csp.get_all_unasgn_vars():
-        
-        #loop through list of [vals in current domain of v]
-        for d in v.cur_domain():
-            
-            #assign d to v
-            v.assign(d)
-            #prune other vals from v's domain
-            for otherval in v.cur_domain():
-                if otherval != d:
-                    v.prune_value(otherval)
-        
-            #find constraints whose scope contains v
-            for c in constraints:
-                if v in c.get_scope():
-                    GACq.append(c)
-
-    #GAC Enforce
-    for c in GACq:
-        for var in c.get_scope():
-            for d in var.cur_domain():
-                if not c.has_support(v, d):
-                    #if d is in current domain (of v) && v not yet pruned
-                    if (v.in_cur_domain(d)) and ((v, d) not in pruned):
-                        v.prune_value(d)
-                        pruned.append((v, d))
-                            if v.cur_domain_size() == 0: #dead end reached
-                                return False, pruned
-
-return True, pruned
-'''
 

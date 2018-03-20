@@ -25,14 +25,14 @@ import operator
 
 def ord_dh(csp):
     '''
-    A variable ordering heuristic that chooses the next variable to be assigned
-    according to the Degree heuristic (DH). ord_dh returns the variable that is
-    involved in the largest number of constraints on other unassigned variables.
-    
-    consider using csp.get_cons_with_var(v)?
+    A variable ordering heuristic that chooses the next variable to
+    be assigned according to the Degree heuristic (DH). ord_dh returns
+    the variable that is involved in the largest number of constraints
+    on other unassigned variables.
     '''
     # TODO! IMPLEMENT THIS!
-    count = {} #count[var] = # of constraints-with-unasgd-vars involving var
+    count = {} #count[var] = no. of links to unasg'd vars across 
+                #all constraints
     
     #loop through list of [unassigned vars] in the CSP
     vars = csp.get_all_unasgn_vars()
@@ -41,19 +41,19 @@ def ord_dh(csp):
         #add v to dictionary as key
         count[v] = 0
     
-        #loop through list of [all constraints] in the CSP
-        for c in csp.get_all_cons():
+        #loop through list of [all constraints] in the CSP with v
+        for c in csp.get_all_cons_with_var(v):
         
             #if constraint c has unassigned vars
             if c.get_n_unasgn() != 0:
-                
-                #check if our var is in constraint c's scope
-                if v in c.get_scope():
-                    
-                    #increment v's count by 1
-                    count[v] += 1
 
-    #operator.itemgetter (imported) fetches dict key w/greatest value
+                #consider all unasgn'd vars that aren't v
+                for uv in c.get_unasgn_vars():
+                    if uv != v:
+                        #increment v's count by 1
+                        count[v] += 1
+
+    #operator.itemgetter fetches dict key w/greatest value
     dh_var = max(count.items(), key=operator.itemgetter(1))[0]
 
     return dh_var
@@ -66,7 +66,7 @@ def ord_mrv(csp):
     domain (i.e., the variable with the fewest legal values).
     '''
     # TODO! IMPLEMENT THIS!
-    vars = csp.get_all_unasgn_vars() #list of [unassigned vars] in the CSP
+    vars = csp.get_all_unasgn_vars() #list of [unassigned vars] in CSP
     
     #assign first var in vars to mrv_var
     mrv_var = vars[0]
@@ -82,75 +82,52 @@ def ord_mrv(csp):
 
 def val_lcv(csp, var):
     '''
-    A value heuristic that, given a variable, chooses the value to be assigned
-    according to the Least-Constraining-Value (LCV) heuristic. val_lcv
-    returns a list of values. The list is ordered by the value that rules out
-    the fewest values in the remaining variables (i.e., the variable that gives
-    the most flexibility later on) to the value that rules out the most.
-    
-    choose value that rules out the fewest values for neighbouring vars in
-    the constraint graph
-
-    A val_ordering function that takes CSP object csp and Variable object var,
-    and returns a list of Values [val1,val2,val3,...]
-    from var's current domain, ordered from best to worst, evaluated according to the
-    Least Constraining Value (LCV) heuristic.
-    (In other words, the list will go from least constraining value in the 0th index,
-    to most constraining value in the $j-1$th index, if the variable has $j$ current domain values.)
-    
-    The best value, according to LCV, is the one that rules out the fewest domain values in other
-    variables that share at least one constraint with var.
-    
-    examine vals from var's current domain.
-    if var=val, how many neighbourvars' values are eliminated?
-    (neighbour var = var that shares a constraint with var)
-    keep track of # of (domain values in neighbour vars) that var rules out
+    A value heuristic that, given a variable, chooses the value to be 
+    assigned according to the Least-Constraining-Value (LCV) heuristic.
+    val_lcv returns a list of values. The list is ordered by the value
+    that rules out the fewest values in the remaining variables (i.e., 
+    the variable that gives the most flexibility later on) to the value
+    that rules out the most.
     '''
     # TODO! IMPLEMENT THIS!
     vals = []
-    count = {} #count[var] = # of neighbouring-vars' values ruled out
+    count = {} #count[val] = no. of resulting neighbour prunes
+        
+        # #add v to dictionary as key
+        # count[v] = 0
     
-    #loop through list of [values in var's current domain]
-    for val in var.cur_domain():
-
-        #add val to dictionary as key
-        count[val] = 0
-
-        #loop through list of [constraints containing var]
-        for c in csp.get_cons_with_var(var):
-            
-            #loop through neighbouring variables
-            for neighbour in c.get_scope():
-                
-                #if neighbour is unassigned and is not var
-                if ((neighbour != var) and
-                   (neighbour in csp.get_all_unasgn_vars())):
+    #loop through list of [all constraints] in the CSP with var
+    for c in csp.get_all_cons_with_var(var):
     
-                    #if (var, v) has no supporting tuple in c
-                    if not c.has_support(var, val):
-                        
-                        #increment v's count by 1
-                        count[val] += 1
+        #if constraint c has unassigned vars besides var
+        if c.get_n_unasgn() > 1:
+
+            #count no. of values in all neighbour vars' domains
+            sum = 0
+            for nbr in c.get_unasgn_vars():
+                if nbr != var:
+                    sum += nbr.cur_domain_size()
+
+            for possval in var.cur_domain():
+
+                #assign it to var
+                var.assign(possval)
+
+                #count new no. of values in all neighbours' domains
+                sum_new = 0
+                for nbr in c.get_unasgn_vars():
+                    if nbv != var:
+                        sum_new += nbr.cur_domain_size()
+
+                #add no. of prumes to count{}
+                count[possval] = sum - sum_new
+
+                var.unassign()
 
     #sort count by ascending value, store in **LIST** count_ordered
-    count_ordered = sorted(count.items(), key=operator.itemgetter(1))
+    count_ordered = sorted(count.items(), key=operator.itemgetter(1)) 
     #append count elements vals
     for (k,v) in count_ordered:
         vals.append(k)
 
     return vals
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
