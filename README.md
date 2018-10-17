@@ -23,7 +23,9 @@ Additionally, the following heuristics are implemented in heuristics.py:
 ## How to Play KenKen
 KenKen (also known as KenDoku or Mathdoku) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill in an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3x3 grid.
 
-<img align="center" src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="300" />
+<p align="center">
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="300" />
+</p>
 
 A KenKen grid contains *n* -sized groups of cells called ***cages***, which are outlined in bold. The grid above has 5 cages.
 
@@ -35,7 +37,9 @@ Each cage contain a ***target*** and, optionally, an ***operation***. Those are 
 * In a cage, digits combine via the given operation to produce the given target
 
 The solution:
+<p align="center">
 <img align="right" src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="300" />
+</p>
 
 ## Propagators
 
