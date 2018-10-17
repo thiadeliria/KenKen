@@ -21,28 +21,21 @@ Additionally, the following heuristics are implemented in heuristics.py:
 * [Heuristics](https://github.com/thiadeliria/KenKen#heuristics)
         
 ## How to Play KenKen
-KenKen (also known as KenDoku or Mathdoku) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill in an *n* × *n* grid of cells with digits 1 to *n*. A KenKen grid outlines *n* -sized groups of cells called ***cages*** that contain a ***target*** and, optionally, an ***operation***. A target is an integer. An operation might be addition, subtraction, multiplication, or division. In a cage, digits 1 to *n* must be combined via the given operation, in some order, to produce the target value.
+KenKen (also known as KenDoku or Mathdoku) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill in an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3x3 grid.
 
-For example, here is a 3x3 grid with five cages.
+<img align="center" src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="300" />
 
-<img align="left" src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="300" />
+A KenKen grid contains *n* -sized groups of cells called ***cages***, which are outlined in bold. The grid above has 5 cages.
 
-Explanation:
-
-* 3: the target and solution (since this cage is a single cell) is 3
-* 2÷: the two digits we fill in must produce 2 when one digit divides the other
-* 2-: the two digits must produce 2 when one digit subtracts the other
-* 4×: means that the three digits must produce 4 when all three are multiplied 
-
-The solution:
-<img align="right" src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="300" />
+Each cage contain a ***target*** and, optionally, an ***operation***. Those are the little numbers and symbols in the corner of the cages. A target is an integer. An operation might be addition, subtraction, multiplication, or division. We must fill in the cages with digits that combine via the given operation, in some order, to produce the target value. For example, there are two single-cell cages in the upper right and lower left corners. Each cage reads "3" - which means 3 is the target and solution (since each cage is a single cell). As for the three-cell cage in the lower right grid, "4×" means that the three digits must produce 4 when all three are multiplied, such as in 1×2×2.
 
 ### Rules:
 * Each digit appears only once in a row
 * Each digit appears only once in a column
-* Each digit appears only once in a cage 
-*
+* In a cage, digits combine via the given operation to produce the given target
 
+The solution:
+<img align="right" src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="300" />
 
 ## Propagators
 
