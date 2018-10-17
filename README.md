@@ -13,7 +13,7 @@ Additionally, the following heuristics are implemented in heuristics.py:
 
 
 ## Table of Contents
-* [How to Play KenKen](https://github.com/thiadeliria/KenKen)
+* [How to Play KenKen](https://github.com/thiadeliria/KenKen#how-to-play-kenken)
     * [Rules](https://github.com/thiadeliria/KenKen#rules)
 * [Propagators](https://github.com/thiadeliria/KenKen#propagators)
     * [Forward Checking](https://github.com/thiadeliria/KenKen#forward-checking)
@@ -25,9 +25,9 @@ KenKen (also known as KenDoku or Mathdoku) is a puzzle game designed to improve 
 
 For example, here is a 3x3 grid with five cages.
 
-<p align="left">
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="300" />
-</p> Explanation:
+<img align="left" src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="300" />
+
+Explanation:
 
 * 3: the target and solution (since this cage is a single cell) is 3
 * 2÷: the two digits we fill in must produce 2 when one digit divides the other
@@ -35,9 +35,7 @@ For example, here is a 3x3 grid with five cages.
 * 4×: means that the three digits must produce 4 when all three are multiplied 
 
 The solution:
-<p align="center">
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="300" />
-</p>
+<img align="right" src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="300" />
 
 ### Rules:
 * Each digit appears only once in a row
