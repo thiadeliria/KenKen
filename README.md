@@ -38,7 +38,7 @@ Each cage contain a ***target*** and, optionally, an ***operation***. Those are 
 
 The solution:
 <p align="center">
-<img align="right" src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="300" />
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="300" />
 </p>
 
 ## Propagators
