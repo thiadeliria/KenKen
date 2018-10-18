@@ -15,7 +15,7 @@ Additionally, the following heuristics are implemented in heuristics.py:
 ## Table of Contents
 * [How to Play KenKen](https://github.com/thiadeliria/KenKen#how-to-play-kenken)
     * [Rules](https://github.com/thiadeliria/KenKen#rules)
-* [Constraint Satisfaction Problems](https://github.com/thiadeliria/KenKen#csps)
+* [Constraint Satisfaction Problems (CSPs)](https://github.com/thiadeliria/KenKen#csps)
 * [Constraint Propagators](https://github.com/thiadeliria/KenKen#constraint-propagators)
     * [Forward Checking](https://github.com/thiadeliria/KenKen#forward-checking)
     * [Generalised Arc Consistence](https://github.com/thiadeliria/KenKen#generalised-arc-consistence)
@@ -55,17 +55,17 @@ A solution to a CSP is a complete assignment of values to variables that satisfi
 <img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_vars.png" width="300" />
 </p>
 
-In this problem, we have 9 variables V11 to V33, each representing the value of a cell on the board. Each variable has a domain of {1,2,3}, meaning it can take on a value of 1, 2, or 3. A state consists of a filled-in board. A solution is found when each variable is assigned a value that satisfies the constraints. We can get the constraints from the rules of KenKen:
+In this problem, we have 9 variables *V11* to *V33*, each representing the value of a cell on the board. Each variable has a domain of {1,2,3}, meaning it can take on a value of 1, 2, or 3. A state consists of a filled-in board. A solution is found when each variable is assigned a value that satisfies the constraints. We can get the constraints from the rules of KenKen:
 
 |   | Rule                                                                          | Constraint |
 |---|-------------------------------------------------------------------------------|------------|
-| 1 | Each digit appears only once in a row                                         | V11≠V12≠V13, V21≠V22≠V23, V31≠V32≠V33|
-| 2 | Each digit appears only once in a column                                      | V11≠V21≠V31, V12≠V22≠V32, V13≠V23≠V33|
-| 3 | In a cage, digits combine via the given operation to produce the given target | V11÷V12=2 or V12÷V11=2, V13=3, V21-V22=\|2\|, V31=3, V23×V32×V33=4|
+| 1 | Each digit appears only once in a row                                         | *V11≠V12≠V13, V21≠V22≠V23, V31≠V32≠V33* |
+| 2 | Each digit appears only once in a column                                      | *V11≠V21≠V31, V12≠V22≠V32, V13≠V23≠V33* |
+| 3 | In a cage, digits combine via the given operation to produce the given target | *V11÷V12*=2 or *V12÷V11*=2, *V13=3, V21-V22*=\|2\|, *V31*=3, *V23×V32×V33*=4 |
 
 
 ## Constraint Propagators
- 
+
 ### Forward Checking
 
 ### Generalised Arc Consistence
