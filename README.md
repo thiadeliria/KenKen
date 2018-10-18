@@ -16,7 +16,7 @@ Additionally, the following heuristics are implemented in heuristics.py:
 * [How to Play KenKen](https://github.com/thiadeliria/KenKen#how-to-play-kenken)
     * [Rules](https://github.com/thiadeliria/KenKen#rules)
 * [Constraint Satisfaction Problems (CSPs)](https://github.com/thiadeliria/KenKen#csps)
-* [Constraint Propagators](https://github.com/thiadeliria/KenKen#constraint-propagators)
+* [Constraint Propagation](https://github.com/thiadeliria/KenKen#constraint-propagation)
     * [Forward Checking](https://github.com/thiadeliria/KenKen#forward-checking)
     * [Generalised Arc Consistence](https://github.com/thiadeliria/KenKen#generalised-arc-consistence)
 * [Heuristics](https://github.com/thiadeliria/KenKen#heuristics)
@@ -64,9 +64,11 @@ In this problem, we have 9 variables *V11* to *V33*, each representing the value
 | 3 | In a cage, digits combine via the given operation to produce the given target | *V11÷V12*=2 or *V12÷V11*=2, *V13*=3, *V21-V22*=\|2\|, *V31*=3, *V23×V32×V33*=4 |
 
 
-## Constraint Propagators
+## Constraint Propagation
+We apply propagation to detect possible failures in future value assignments during search. By "looking ahead" at unassigned variables, we can eliminate constraint-incompatible values. Once we find assignments that violate a constraint, we remove (*prune*) those values from their corresponding domains.
 
 ### Forward Checking
+
 
 ### Generalised Arc Consistence
 
