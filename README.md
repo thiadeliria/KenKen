@@ -15,13 +15,14 @@ Additionally, the following heuristics are implemented in heuristics.py:
 ## Table of Contents
 * [How to Play KenKen](https://github.com/thiadeliria/KenKen#how-to-play-kenken)
     * [Rules](https://github.com/thiadeliria/KenKen#rules)
-* [Propagators](https://github.com/thiadeliria/KenKen#propagators)
+* [Constraint Satisfaction Problems](https://github.com/thiadeliria/KenKen#csps)
+* [Constraint Propagators](https://github.com/thiadeliria/KenKen#constraint-propagators)
     * [Forward Checking](https://github.com/thiadeliria/KenKen#forward-checking)
     * [Generalised Arc Consistence](https://github.com/thiadeliria/KenKen#generalised-arc-consistence)
 * [Heuristics](https://github.com/thiadeliria/KenKen#heuristics)
         
 ## How to Play KenKen
-KenKen (also known as KenDoku or Mathdoku) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill in an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3x3 grid.
+KenKen (also known as KenDoku or Mathdoku) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3×3 grid.
 
 <p align="center">
 <img src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="300" />
@@ -41,8 +42,12 @@ The solution:
 <img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="300" />
 </p>
 
-## Propagators
 
+## CSPs
+Constraint satisfaction problems (CSPs) define a problem by representing states in a structured, uniform way. A CSP has a set of *variables* - each of which has a *domain* of possible *values* - and a set of *constraints* that specifies the valid combinations of values we may assign to variables. A solution to a CSP is a complete assignment of values that satisfies all the constraints (=is consistent).
+
+## Constraint Propagators
+ 
 ### Forward Checking
 
 ### Generalised Arc Consistence
