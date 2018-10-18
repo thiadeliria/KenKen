@@ -25,7 +25,7 @@ Additionally, the following heuristics are implemented in heuristics.py:
 KenKen (also known as Kashikoku-Naru-Puzzle, 賢くなるパズル) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3×3 grid.
 
 <p align="center">
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="300" />
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="230" />
 </p>
 
 A KenKen grid contains *n* -sized groups of cells called *cages*, which are outlined in bold. The grid above has 5 cages.
@@ -39,7 +39,7 @@ Each cage contain a *target* and, optionally, an *operation*. Those are the litt
 
 The solution:
 <p align="center">
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="300" />
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="230" />
 </p>
 
 ## CSPs
@@ -52,7 +52,7 @@ Constraint satisfaction problems (CSPs) define a problem by representing states 
 A solution to a CSP is a complete assignment of values to variables that satisfies all the constraints (=is consistent). The strategy of CSPs is to eliminate parts of the search space by identifying value assignments that violate constraints.
 
 <p align="center">
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_vars.png" width="300" />
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_vars.png" width="230" />
 </p>
 
 In this problem, we have 9 variables *V11* to *V33*, each representing the value of a cell on the board. Each variable has a domain of {1,2,3}, meaning it can take on a value of 1, 2, or 3. A state consists of a filled-in board. A solution is found when each variable is assigned a value that satisfies the constraints. We can get the constraints from the rules of KenKen:
@@ -61,7 +61,7 @@ In this problem, we have 9 variables *V11* to *V33*, each representing the value
 |---|-------------------------------------------------------------------------------|------------|
 | 1 | Each digit appears only once in a row                                         | *V11≠V12≠V13, V21≠V22≠V23, V31≠V32≠V33* |
 | 2 | Each digit appears only once in a column                                      | *V11≠V21≠V31, V12≠V22≠V32, V13≠V23≠V33* |
-| 3 | In a cage, digits combine via the given operation to produce the given target | *V11÷V12*=2 or *V12÷V11*=2, *V13=3, V21-V22*=\|2\|, *V31*=3, *V23×V32×V33*=4 |
+| 3 | In a cage, digits combine via the given operation to produce the given target | *V11÷V12*=2 or *V12÷V11*=2, *V13*=3, *V21-V22*=\|2\|, *V31*=3, *V23×V32×V33*=4 |
 
 
 ## Constraint Propagators
