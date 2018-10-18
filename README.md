@@ -22,15 +22,15 @@ Additionally, the following heuristics are implemented in heuristics.py:
 * [Heuristics](https://github.com/thiadeliria/KenKen#heuristics)
         
 ## How to Play KenKen
-KenKen (also known as KenDoku or Mathdoku) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3×3 grid.
+KenKen (also known as Kashikoku-Naru-Puzzle, 賢くなるパズル) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3×3 grid.
 
 <p align="center">
 <img src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="300" />
 </p>
 
-A KenKen grid contains *n* -sized groups of cells called ***cages***, which are outlined in bold. The grid above has 5 cages.
+A KenKen grid contains *n* -sized groups of cells called *cages*, which are outlined in bold. The grid above has 5 cages.
 
-Each cage contain a ***target*** and, optionally, an ***operation***. Those are the little numbers and symbols in the corner of the cages. A target is an integer. An operation might be addition, subtraction, multiplication, or division. We must fill in the cages with digits that combine via the given operation, in some order, to produce the target value. For example, there are two single-cell cages in the upper right and lower left corners. Each cage reads "3" - which means 3 is the target and solution (since each cage is a single cell). As for the three-cell cage in the lower right grid, "4×" means that the three digits must produce 4 when all three are multiplied, such as in 1×2×2.
+Each cage contain a *target* and, optionally, an *operation*. Those are the little numbers and symbols in the corner of the cages. A target is an integer. An operation might be addition, subtraction, multiplication, or division. We must fill in the cages with digits that combine via the given operation, in some order, to produce the target value. For example, there are two single-cell cages in the upper right and lower left corners. Each cage reads "3" - which means 3 is the target and solution (since each cage is a single cell). As for the three-cell cage in the lower right grid, "4×" means that the three digits must produce 4 when all three are multiplied, such as in 1×2×2.
 
 ### Rules:
 * Each digit appears only once in a row
@@ -42,9 +42,27 @@ The solution:
 <img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="300" />
 </p>
 
-
 ## CSPs
-Constraint satisfaction problems (CSPs) define a problem by representing states in a structured, uniform way. A CSP has a set of *variables* - each of which has a *domain* of possible *values* - and a set of *constraints* that specifies the valid combinations of values we may assign to variables. A solution to a CSP is a complete assignment of values that satisfies all the constraints (=is consistent).
+Constraint satisfaction problems (CSPs) define a problem by representing states in a structured, uniform way. A CSP consists of:
+
+* a set of **variables**; - 
+* each of which has a **domain** of possible **values**; and -
+* a set of **constraints** that specifies the valid combinations of values we may assign to variables. 
+
+A solution to a CSP is a complete assignment of values to variables that satisfies all the constraints (=is consistent). The strategy of CSPs is to eliminate parts of the search space by identifying value assignments that violate constraints.
+
+<p align="center">
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_vars.png" width="300" />
+</p>
+
+In this problem, we have 9 variables V11 to V33, each representing the value of a cell on the board. Each variable has a domain of {1,2,3}, meaning it can take on a value of 1, 2, or 3. A state consists of a filled-in board. A solution is found when each variable is assigned a value that satisfies the constraints. We can get the constraints from the rules of KenKen:
+
+|   | Rule                                                                          | Constraint |
+|---|-------------------------------------------------------------------------------|------------|
+| 1 | Each digit appears only once in a row                                         | V11≠V12≠V13, V21≠V22≠V23, V31≠V32≠V33|
+| 2 | Each digit appears only once in a column                                      | V11≠V21≠V31, V12≠V22≠V32, V13≠V23≠V33|
+| 3 | In a cage, digits combine via the given operation to produce the given target | V11÷V12=2 or V12÷V11=2, V13=3, V21-V22=\|2\|, V31=3, V23×V32×V33=4|
+
 
 ## Constraint Propagators
  
