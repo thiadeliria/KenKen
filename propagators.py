@@ -1,8 +1,6 @@
 '''
-This file will contain different constraint propagators to be used within 
-bt_search.
+This file contains constraint propagators to be used within bt_search.
 
----
 A propagator is a function with the following header
     propagator(csp, newly_instantiated_variable=None)
 
@@ -10,7 +8,7 @@ csp is a CSP object---the propagator can use this to get access to the variables
 and constraints of the problem. The assigned variables can be accessed via 
 methods, the values assigned can also be accessed.
 
-newly_instantiated_variable is an optional argument. SEE ``PROCESSING REQUIRED''
+newly_instantiated_variable is an optional argument.
 if newly_instantiated_variable is not None:
     then newly_instantiated_variable is the most
     recently assigned variable of the search.
@@ -25,43 +23,19 @@ The propagator returns True/False and a list of (Variable, Value) pairs, like so
 Propagators will return False if they detect a dead-end. In this case, bt_search 
 will backtrack. Propagators will return true if we can continue.
 
-The list of variable value pairs are all of the values that the propagator 
-pruned (using the variable's prune_value method). bt_search NEEDS to know this 
+The list of variable-value pairs are all of the values that the propagator 
+pruned (using the variable's prune_value method). bt_search needs to know this 
 in order to correctly restore these values when it undoes a variable assignment.
-
-Propagators SHOULD NOT prune a value that has already been pruned! Nor should 
-they prune a value twice.
-
----
-
-PROCESSING REQUIRED:
-When a propagator is called with newly_instantiated_variable = None:
-
-1. For plain backtracking (where we only check fully instantiated constraints)
-we do nothing...return true, []
-
-2. For FC (where we only check constraints with one remaining 
-variable) we look for unary constraints of the csp (constraints whose scope 
-contains only one variable) and we forward_check these constraints.
-
-3. For GAC we initialize the GAC queue with all constaints of the csp.
-
-When a propagator is called with newly_instantiated_variable = a variable V
-
-1. For plain backtracking we check all constraints with V (see csp method
-get_cons_with_var) that are fully assigned.
-
-2. For forward checking we forward check all constraints with V that have one 
-unassigned variable left
-
-3. For GAC we initialize the GAC queue with all constraints containing V.
 
 '''
 
 def prop_BT(csp, newVar=None):
     '''
-    Do plain backtracking propagation. That is, do no propagation at all. Just 
+    Do plain backtracking propagation. That is, do no propagation at all. Only 
     check fully instantiated constraints.
+
+    If called with newVar = a variable V, we check all constraints with V that
+    are fully assigned.
     '''
     if not newVar:
         return True, []
@@ -82,12 +56,13 @@ def prop_BT(csp, newVar=None):
 
 def prop_FC(csp, newVar=None):
     '''
-    Do FC propagation. Check constraints that have exactly one uninstantiated
-    variable in their scope, and prune appropriately. If newVar is None, 
-    forward check all constraints. Otherwise only check constraints 
-    containing newVar.
+    Do forward checking propagation. Check constraints that have exactly one 
+    uninstantiated variable in their scope, and prune appropriately. 
+
+    If newVar is None, forward check all constraints whose scope contains one 
+    variable. Otherwise if newVar = V, forward check constraints containing V
+    that have one unassigned variable left.
     '''
-    # TODO! IMPLEMENT THIS!
     pruned = []
     
     if newVar: #check constraints containing newVar
@@ -133,17 +108,17 @@ def prop_FC(csp, newVar=None):
 
 def prop_GAC(csp, newVar=None):
     '''
-    Do GAC propagation. If newVar is None we do initial GAC enforce 
-    processing all constraints. Otherwise we do GAC enforce with constraints
-    containing newVar on GAC Queue.
+    Do GAC propagation. 
+
+    If newVar is None, we initialise the GAC queue (do GAC enforce) with all 
+    constraints of the CSP. Otherwise if newVar = V, we initialise the queue
+    with constraints containing V.
     
     note: CSP is GAC iff all constraints are GAC.
-    constraint is GAC iff it's GAC w/r/t each var in scope.
-    constraint is GAC w/r/t a var iff for every value of V_i exist values that
-    satisfy C.
+    A constraint is GAC iff it's GAC w/r/t each var in scope.
+    A constraint is GAC w/r/t a var iff for every value of V_i exist values 
+    that satisfy C.
     '''
-
-    # TODO! IMPLEMENT THIS!
     pruned = []
     
     if newVar: #check constraints containing newVar
