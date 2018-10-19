@@ -28,7 +28,7 @@ KenKen (also known as Kashikoku-Naru-Puzzle, 賢くなるパズル) is a puzzle 
 <img src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="230" />
 </p>
 
-A KenKen grid contains *n* -sized groups of cells called *cages*, which are outlined in bold. The grid above has 5 cages.
+A KenKen board contains groups of cells called *cages*, which are outlined in bold. The board above has 5 cages.
 
 Each cage contain a *target* and, optionally, an *operation*. Those are the little numbers and symbols in the corner of the cages. A target is an integer. An operation might be addition, subtraction, multiplication, or division. We must fill in the cages with digits that combine via the given operation, in some order, to produce the target value. For example, there are two single-cell cages in the upper right and lower left corners. Each cage reads "3" - which means 3 is the target and solution (since each cage is a single cell). As for the three-cell cage in the lower right grid, "4×" means that the three digits must produce 4 when all three are multiplied, such as in 1×2×2.
 
@@ -65,7 +65,7 @@ In this problem, we have 9 variables *V11* to *V33*, each representing the value
 
 
 ## Constraint Propagation
-We apply propagation to detect possible failures in future value assignments during search. By "looking ahead" at unassigned variables, we can eliminate constraint-incompatible values. Once we find assignments that violate a constraint, we remove (*prune*) those values from their corresponding domains.
+We apply propagation to detect possible failures in future value assignments during search. By "looking ahead" at unassigned variables, we can eliminate constraint-incompatible values. Once we find assignments that violate a constraint, we "prune" those values from their corresponding domains.
 
 ### Forward Checking
 
