@@ -1,5 +1,19 @@
 '''
-All models need to return a CSP object, and a list of lists of Variable objects 
+The following CSP models take as input a KenKen grid, in the form of a 
+list of lists.
+
+binary_ne_grid - a model of a KenKen grid (without cage constraints) 
+built using only binary-not-equal constraints for both the row and column 
+constraints.
+
+nary_ad_grid - a model of a KenKen grid (without cage constraints) built 
+using only n-ary all-different constraints for both the row and column 
+constraints.
+
+kenken_csp_model - a model built using n-ary all-different constraints for 
+the grid and KenKen cage constraints.
+
+All models return a CSP object, and a list of lists of Variable objects 
 representing the board. The returned list of lists is used to access the 
 solution. 
 
@@ -9,24 +23,8 @@ For example, after these three lines of code
     solver = BT(csp)
     solver.bt_search(prop_FC, var_ord)
 
-var_array[0][0].get_assigned_value() should be the correct value in the top left
-cell of the KenKen puzzle.
-
-The grid-only models do not need to encode the cage constraints.
-
-1. binary_ne_grid (worth 10/100 marks)
-    - A model of a KenKen grid (without cage constraints) built using only 
-      binary not-equal constraints for both the row and column constraints.
-
-2. nary_ad_grid (worth 10/100 marks)
-    - A model of a KenKen grid (without cage constraints) built using only n-ary 
-      all-different constraints for both the row and column constraints. 
-
-3. kenken_csp_model (worth 20/100 marks) 
-    - A model built using your choice of (1) binary binary not-equal, or (2) 
-      n-ary all-different constraints for the grid.
-    - Together with KenKen cage constraints.
-
+var_array[0][0].get_assigned_value() should be the correct value in the top 
+left cell of the KenKen puzzle.
 '''
 import itertools
 from cspbase import *
@@ -149,7 +147,6 @@ def binary_ne_grid(kenken_grid):
     A model of a KenKen grid (without cage constraints) built using only
     binary-not-equal constraints for both the row and column constraints.
     '''
-    # TODO! IMPLEMENT THIS!
     n = kenken_grid[0][0] #dimension size
     
     #---VARIABLES---
@@ -181,7 +178,6 @@ def binary_ne_grid(kenken_grid):
                 sat_tuples.append(t)
             #add tuples to constraint c
             c.add_satisfying_tuples(sat_tuples)
-
             #add constraint c to constraints[]
             constraints.append(c)
 
@@ -190,7 +186,6 @@ def binary_ne_grid(kenken_grid):
         column = []
         for j in range(len(domain)): #num of rows
             column.append(board[j][i])
-
         for t in generate_tuple_list(column, 2):
             #init constraint c with scope
             c = Constraint("C({},{})".format(t[0].name, t[1].name),
@@ -202,37 +197,27 @@ def binary_ne_grid(kenken_grid):
                 sat_tuples.append(t)
             #add tuples to constraint c
             c.add_satisfying_tuples(sat_tuples)
-
             #add constraint c to constraints[]
             constraints.append(c)
 
     #---CSP---
     #init csp
     csp = CSP("{}-BinaryKenKen".format(n))
-
-    # print("this csp's variables are:") #testing
     #add variables to csp
     for row in board:
         for every_var in row:
             csp.add_var(every_var)
-            # print(every_var.name) #testing
-
-    # print("this csp's constraints are:") #testing
     #add constraints to csp
     for c in constraints:
         csp.add_constraint(c)
-        # print(c.name) #testing
 
     return csp, board
-
-
 
 def nary_ad_grid(kenken_grid):
     '''
     A model of a KenKen grid (without cage constraints) built using only
     n-ary all-different constraints for both the row and column constraints.
     '''
-    # TODO! IMPLEMENT THIS!
     n = kenken_grid[0][0] #dimension size
     
     #---VARIABLES---
@@ -254,8 +239,6 @@ def nary_ad_grid(kenken_grid):
     #add row constraints
     for row in board:
         for t in generate_tuple_list(row, n):
-
-            # print("rows of variables:\n" + row) #testing 
             #init constraint c with scope
             cons_name = generate_cons_name(row)
             c = Constraint(cons_name, row)
@@ -266,7 +249,6 @@ def nary_ad_grid(kenken_grid):
                 sat_tuples.append(t)
             #add tuples to constraint c
             c.add_satisfying_tuples(sat_tuples)
-
             #add constraint c to constraints[]
             constraints.append(c)
 
@@ -276,7 +258,6 @@ def nary_ad_grid(kenken_grid):
         column = []
         for j in range(len(domain)): #num of rows
             column.append(board[j][i])
-
         for t in generate_tuple_list(column, n):
             #init constraint c with scope
             cons_name = generate_cons_name(column)
@@ -295,31 +276,21 @@ def nary_ad_grid(kenken_grid):
     #---CSP---
     #init csp
     csp = CSP("{}-aryKenKen".format(n))
-
-    # print("this csp's variables are:") #testing
     #add variables to csp
     for row in board:
         for every_var in row:
             csp.add_var(every_var)
-            # print(every_var.name) #testing
-
-    # print("this csp's constraints are:") #testing
     #add constraints to csp
     for c in constraints:
         csp.add_constraint(c)
-        # print(c.name) #testing
 
     return csp, board
     
-
-
 def kenken_csp_model(kenken_grid):
     '''
     A model built using n-ary all-different constraints for the grid and
     KenKen cage constraints.
     '''
-
-    # TODO! IMPLEMENT THIS!
     n = kenken_grid[0][0] #dimension size
     
     #---VARIABLES---
@@ -384,8 +355,6 @@ def kenken_csp_model(kenken_grid):
     #add row constraints
     for row in board:
         for t in generate_tuple_list(row, n):
-
-            # print("rows of variables:\n" + row) #testing 
             #init constraint c with scope
             cons_name = generate_cons_name(row)
             c = Constraint("row: " + cons_name, row)
@@ -396,7 +365,6 @@ def kenken_csp_model(kenken_grid):
                 sat_tuples.append(t)
             #add tuples to constraint c
             c.add_satisfying_tuples(sat_tuples)
-
             #add constraint c to constraints[]
             constraints.append(c)
 
@@ -406,7 +374,6 @@ def kenken_csp_model(kenken_grid):
         column = []
         for j in range(len(domain)): #num of rows
             column.append(board[j][i])
-
         for t in generate_tuple_list(column, n):
             #init constraint c with scope
             cons_name = generate_cons_name(column)
@@ -418,30 +385,18 @@ def kenken_csp_model(kenken_grid):
                 sat_tuples.append(t)
             #add tuples to constraint c
             c.add_satisfying_tuples(sat_tuples)
-
             #add constraint c to constraints[]
             constraints.append(c)
 
     #---CSP---
     #init csp
     csp = CSP("{}-KenKen".format(n))
-
-    # print("Variables:") #testing
     #add variables to csp
     for row in board:
         for every_var in row:
             csp.add_var(every_var)
-        # print(row) #testing
-
-    # print("Constraints:") #testing
     #add constraints to csp
     for c in constraints:
-        # print(type(c)) #testing
-        # print("name: " + c.name)
-        # print(c.scope)
         csp.add_constraint(c)
-        # print(c.name) #testing
-
-    # csp.print_soln() #testing
 
     return csp, board
