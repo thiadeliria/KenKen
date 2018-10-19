@@ -237,7 +237,7 @@ class TestStringMethods(unittest.TestCase):
         self.assertEqual(var.name, simpleCSP.vars[len(simpleCSP.vars)-1].name, "MRV Picked the wrong variable")
 
     ##Tests FC after the first queen is placed in position 1.
-    @unittest.skipUnless(TEST_PROPAGATORS, "Not Testing Propagotors.")
+    @unittest.skipUnless(TEST_PROPAGATORS, "Not Testing Propagators.")
     def test_simple_FC(self):
         queens = nQueens(8)
         curr_vars = queens.get_all_vars()
@@ -248,7 +248,7 @@ class TestStringMethods(unittest.TestCase):
         for i in range(len(curr_vars)):
             self.assertEqual(var_domain[i], answer[i], "Failed simple FC test: variable domains don't match expected results")
     
-    @unittest.skipUnless(TEST_PROPAGATORS, "Not Testing Propagotors.")
+    @unittest.skipUnless(TEST_PROPAGATORS, "Not Testing Propagators.")
     def test_DWO_FC(self):
         queens = nQueens(6)
         cur_var = queens.get_all_vars()
