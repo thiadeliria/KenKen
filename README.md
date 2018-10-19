@@ -1,6 +1,6 @@
 # KenKen
 A CSP (constraint satisfaction problem) implementation to solve a [KenKen puzzle](https://www.kenkenpuzzle.com).
-The puzzle grid and its constraints are defined in kenken_csp.py using three different CSP models. 
+The puzzle board and its constraints are defined as CSP models in kenken_csp.py. 
 
 Two constraint propagators are implemented in propagators.py:
 * Forward Checking
@@ -22,7 +22,7 @@ Additionally, the following heuristics are implemented in heuristics.py:
 * [Heuristics](https://github.com/thiadeliria/KenKen#heuristics)
         
 ## How to Play KenKen
-KenKen (also known as Kashikoku-Naru-Puzzle, 賢くなるパズル) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3×3 grid.
+KenKen (also known as Kashikoku-Naru-Puzzle or 賢くなるパズル) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3×3 grid.
 
 <p align="center">
 <img src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="230" />
@@ -65,11 +65,26 @@ In this problem, we have 9 variables *V11* to *V33*, each representing the value
 
 
 ## Constraint Propagation
-We apply propagation to detect possible failures in future value assignments during search. By "looking ahead" at unassigned variables, we can eliminate constraint-incompatible values. Once we find assignments that violate a constraint, we "prune" those values from their corresponding domains.
+We apply propagation to detect possible failures in future value assignments during search. By "looking ahead" at unassigned variables, we can eliminate constraint-incompatible values. Once we find assignments that violate a constraint, we remove or "prune" those values from their corresponding domains.
 
 ### Forward Checking
+Implemented as `prop_fc` in propagators.py. The strategy is to check the CSP's constraints that have one unassigned variable left in its scope. We list all the assigned variables and constraints, and step through the forward checking process.
+
+**Step 1:** No variables are assigned yet. The constraints with only one unassigned variable are highlighted in bold.
+
+| Assigned Variables | Constraints |
+|--------------------|-------------|
+|                    | *V11≠V12≠V13, V21≠V22≠V23, V31≠V32≠V33*, *V11≠V21≠V31, V12≠V22≠V32, V13≠V23≠V33*, *V11÷V12*=2 or *V12÷V11*=2, ***V13***=**3**, *V21-V22*=\|2\|, ***V31***=**3**, *V23×V32×V33*=4 |
+
+
+**Step 2:** We assign 3 to *V13* and *V31*. There are no constraints with only one unassigned variable left.
+
+| Assigned Variables | Constraints |
+|--------------------|-------------|
+|*V13*=3, *V31*=3    | *V11≠V12≠V13, V21≠V22≠V23, V31≠V32≠V33*, *V11≠V21≠V31, V12≠V22≠V32, V13≠V23≠V33*, *V11÷V12*=2 or *V12÷V11*=2, *V21-V22*=\|2\|, *V23×V32×V33*=4 |
 
 
 ### Generalised Arc Consistence
+Implemented as `prop_gac` in propagators.py. Generalised Arc Consistence (GAC) employs propagation to make each arc in a constraint graph consistent. We initialise the GAC queue with all relevant constraints of the CSP.
 
 ## Heuristics
