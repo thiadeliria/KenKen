@@ -68,36 +68,8 @@ In this problem, we have 9 variables *V11* to *V33*, each representing the value
 We apply propagation to detect possible failures in future value assignments during search. By "looking ahead" at unassigned variables, we can eliminate constraint-incompatible values. Once we find assignments that violate a constraint, we remove or "prune" those values from their corresponding domains.
 
 ### Forward Checking
-Implemented as `prop_fc` in propagators.py. The strategy is to check the CSP's constraints that have one unassigned variable left in its scope. We list all the assigned variables and constraints, and step through the forward checking process.
+Implemented as `prop_fc` in propagators.py. The strategy is to check the CSP's constraints that have one unassigned variable left in its scope. We comb through the forward checking process below. The domain of each variable, *i.e.*, {1 2 3}, is updated at each step.
 
-
-<img align="left" src="https://github.com/thiadeliria/KenKen/blob/master/images/example_vars.png" width="200" />
-
-**Step 1:** No variables are assigned yet. The constraints with only one unassigned variable are highlighted in bold.
-
-**Constraints:**
-
-*V11≠V12≠V13, V21≠V22≠V23, V31≠V32≠V33,*
-
-*V11≠V21≠V31, V12≠V22≠V32, V13≠V23≠V33*, 
-
-*V11÷V12*=2 or *V12÷V11*=2, ***V13***=**3**, *V21-V22*=\|2\|, *V31*=3, *V23×V32×V33*=4
-
-<img align="left" src="https://github.com/thiadeliria/KenKen/blob/master/images/fc_1.png" width="200" />
-
-**Step 2:** We assign 3 to *V13*.
-
-**Constraints:**
-
-*V11≠V12≠V13, V21≠V22≠V23, V31≠V32≠V33,*
-
-*V11≠V21≠V31, V12≠V22≠V32, V13≠V23≠V33*, 
-
-*V11÷V12*=2 or *V12÷V11*=2, *V21-V22*=\|2\|, ***V31***=**3**, *V23×V32×V33*=4
-
-<img align="left" src="https://github.com/thiadeliria/KenKen/blob/master/images/fc_2.png" width="200" />
-
-**Step 3:** Assign 3 to *V31*.
 
 ### Generalised Arc Consistence
 Implemented as `prop_gac` in propagators.py. Generalised Arc Consistence (GAC) employs propagation to make each arc in a constraint graph consistent. We initialise the GAC queue with all relevant constraints of the CSP.
