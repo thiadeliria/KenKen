@@ -70,9 +70,10 @@ We apply propagation to detect possible failures in future value assignments dur
 ### Forward Checking
 Implemented as `prop_fc` in propagators.py. The strategy is to check the CSP's constraints that have one unassigned variable left in its scope. We list all the assigned variables and constraints, and step through the forward checking process.
 
-**Step 1:** No variables are assigned yet. The constraints with only one unassigned variable are highlighted in bold.
 
 <img align="left" src="https://github.com/thiadeliria/KenKen/blob/master/images/example_vars.png" width="200" />
+
+**Step 1:** No variables are assigned yet. The constraints with only one unassigned variable are highlighted in bold.
 
 **Constraints:**
 
@@ -84,9 +85,10 @@ Implemented as `prop_fc` in propagators.py. The strategy is to check the CSP's c
 
 *V21-V22*=\|2\|, *V31*=3, *V23×V32×V33*=4
 
-**Step 2:** We assign 3 to *V13*.
 
 <img align="left" src="https://github.com/thiadeliria/KenKen/blob/master/images/fc_1.png" width="200" />
+
+**Step 2:** We assign 3 to *V13*.
 
 **Constraints:**
 
