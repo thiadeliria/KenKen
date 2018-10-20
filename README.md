@@ -70,6 +70,38 @@ We apply propagation to detect possible failures in future value assignments dur
 ### Forward Checking
 Implemented as `prop_fc` in propagators.py. The strategy is to check the CSP's constraints that have one unassigned variable left in its scope. We comb through the forward checking process below. The domain of each variable, *i.e.*, {1 2 3}, is updated at each step.
 
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc00.png" width="180" /> 
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc01.png" width="180" /> The constraint *V13*=3 has only one unassigned variable (*V13*). We do *V13*:=3. From *V11≠V12≠V13* we get *V11≠V13* and *V12≠V13*, both of which are now constraints with only one unassigned variable. Since *V13* is now 3, we can remove 3 from the domains of *V11* and *V13*. Given the non-equal column constraints, we do the same for variables *V23* and *V33*.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc02.png" width="180" /> Similarly, we assign *V31*:=3 and remove some values from the domains of *V31*'s row- and column-neighbours.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc03.png" width="180" /> No constraints currently have one unassigned variable, so we pick one, *V11*, and assign a value - 1 - in its domain.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc04.png" width="180" /> *V11≠V12* now has only one unassigned variable - *V12*. The only possible value in its domain is 2.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc05.png" width="180" /> From the non-equal column constraints, we get the constraints *V11≠V21* and *V21≠V31*, which give *V21*=2.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc06.png" width="180" /> We pick a value, 1, for *V22* from its domain. It follows that its neighbours, *V23* and *V32* have empty domains. We hit Domain Wipe-Out (DWO), so we step back.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc07.png" width="180" /> Instead of assigning 1, we assign 3 to *V22*. This falsifies the cage constraint *V21-V22*=|2|, so we have to step back further.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc08.png" width="180" /> We try assigning 2 to *V11*.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc09.png" width="180" /> We choose a value from *V12*'s domain.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc10.png" width="180" /> Now we choose a value from *V21*'s domain.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc11.png" width="180" /> Now we choose a value from *V22*'s domain. We get DWO again, so we backtrack and try another value.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc12.png" width="180" /> We try assigning *V22*:=3.
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc13.png" width="180" />
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc14.png" width="180" />
+
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc15.png" width="180" /> Solution found!
+
 
 ### Generalised Arc Consistence
 Implemented as `prop_gac` in propagators.py. Generalised Arc Consistence (GAC) employs propagation to make each arc in a constraint graph consistent. We initialise the GAC queue with all relevant constraints of the CSP.
