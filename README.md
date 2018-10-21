@@ -108,6 +108,10 @@ Implemented as `prop_fc` in propagators.py. The strategy is to check - as we fil
 #### Search Space
 We find the solution in 15 steps.
 
+<p align="center">
+   <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc_searchspace.png" width="380" />
+</p>
+
 ### Generalised Arc Consistence
 Implemented as `prop_gac` in propagators.py. Generalised Arc Consistence (GAC) employs propagation to make each arc in a constraint graph consistent. We initialise the GAC queue with all relevant constraints of the CSP.
 
