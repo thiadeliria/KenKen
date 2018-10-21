@@ -18,6 +18,7 @@ Additionally, the following heuristics are implemented in heuristics.py:
 * [Constraint Satisfaction Problems (CSPs)](https://github.com/thiadeliria/KenKen#csps)
 * [Constraint Propagation](https://github.com/thiadeliria/KenKen#constraint-propagation)
     * [Forward Checking](https://github.com/thiadeliria/KenKen#forward-checking)
+         * [Search Space](https://github.com/thiadeliria/KenKen#search-space)
     * [Generalised Arc Consistence](https://github.com/thiadeliria/KenKen#generalised-arc-consistence)
 * [Heuristics](https://github.com/thiadeliria/KenKen#heuristics)
         
@@ -30,7 +31,9 @@ KenKen (also known as Kashikoku-Naru-Puzzle or 賢くなるパズル) is a puzzl
 
 A KenKen board contains groups of cells called *cages*, which are outlined in bold. The board above has 5 cages.
 
-Each cage contain a *target* and, optionally, an *operation*. Those are the little numbers and symbols in the corner of the cages. A target is an integer. An operation might be addition, subtraction, multiplication, or division. We must fill in the cages with digits that combine via the given operation, in some order, to produce the target value. For example, there are two single-cell cages in the upper right and lower left corners. Each cage reads "3" - which means 3 is the target and solution (since each cage is a single cell). As for the three-cell cage in the lower right grid, "4×" means that the three digits must produce 4 when all three are multiplied, such as in 1×2×2.
+Each cage contain a *target* and, optionally, an *operation*. Those are the little numbers and symbols in the corner of the cages. A target is an integer. An operation might be addition, subtraction, multiplication, or division. We must fill in the cages with digits that combine via the given operation, in some order, to produce the target value. 
+
+For example, there are two single-cell cages that read "3" - which means 3 is the target and solution. As for the three-cell cage in the lower right grid, "4×" means that the three digits must produce 4 when all three are multiplied, such as in 1×2×2.
 
 ### Rules:
 * Each digit appears only once in a row
@@ -68,7 +71,7 @@ In this problem, we have 9 variables *V11* to *V33*, each representing the value
 We apply propagation to detect possible failures in future value assignments during search. By "looking ahead" at unassigned variables, we can eliminate constraint-incompatible values. Once we find assignments that violate a constraint, we remove or "prune" those values from their corresponding domains.
 
 ### Forward Checking
-Implemented as `prop_fc` in propagators.py. The strategy is to check the CSP's constraints that have one unassigned variable left in its scope. We comb through the forward checking process below. The domain of each variable, *i.e.*, {1 2 3}, is updated at each step.
+Implemented as `prop_fc` in propagators.py. The strategy is to check - as we fill in cells and eliminate unwanted values - the CSP's constraints that have one unassigned variable left in its scope. We comb through the forward checking process below. At each step, the domain of each variable, *i.e.*, {1 2 3}, is updated in its corresponding cell.
 
 <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc00.png" width="180" /> 
 
@@ -102,6 +105,8 @@ Implemented as `prop_fc` in propagators.py. The strategy is to check the CSP's c
 
 <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc15.png" width="180" /> Solution found!
 
+#### Search Space
+We find the solution in 15 steps.
 
 ### Generalised Arc Consistence
 Implemented as `prop_gac` in propagators.py. Generalised Arc Consistence (GAC) employs propagation to make each arc in a constraint graph consistent. We initialise the GAC queue with all relevant constraints of the CSP.
