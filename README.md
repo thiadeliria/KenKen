@@ -109,7 +109,7 @@ Implemented as `prop_fc` in propagators.py. The strategy is to check - as we fil
 We find the solution in 15 steps.
 
 <p align="center">
-   <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc_searchspace.png" width="380" />
+   <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc_searchspace.png" width="340" />
 </p>
 
 ### Generalised Arc Consistence
