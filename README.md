@@ -26,7 +26,7 @@ Additionally, the following heuristics are implemented in heuristics.py:
 KenKen (also known as Kashikoku-Naru-Puzzle or 賢くなるパズル) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3×3 grid.
 
 <p align="center">
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="230" />
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example.png" width="230" title="blank KenKen puzzle"/>
 </p>
 
 A KenKen board contains groups of cells called *cages*, which are outlined in bold. The board above has 5 cages.
@@ -42,7 +42,7 @@ For example, there are two single-cell cages that read "3" - which means 3 is th
 
 The solution:
 <p align="center">
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="230" />
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_sol.png" width="230" title="KenKen puzzle solution"/>
 </p>
 
 ## CSPs
@@ -55,7 +55,7 @@ Constraint satisfaction problems (CSPs) define a problem by representing states 
 A solution to a CSP is a complete assignment of values to variables that satisfies all the constraints (=is consistent). The strategy of CSPs is to eliminate parts of the search space by identifying value assignments that violate constraints.
 
 <p align="center">
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_vars.png" width="230" />
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/example_vars.png" width="230" title="KenKen puzzle with variables"/>
 </p>
 
 In this problem, we have 9 variables *V11* to *V33*, each representing the value of a cell on the board. Each variable has a domain of {1,2,3}, meaning it can take on a value of 1, 2, or 3. A state consists of a filled-in board. A solution is found when each variable is assigned a value that satisfies the constraints. We can get the constraints from the rules of KenKen:
@@ -73,43 +73,43 @@ We apply propagation to detect possible failures in future value assignments dur
 ### Forward Checking
 Implemented as `prop_fc` in propagators.py. The strategy is to check - as we fill in cells and eliminate unwanted values - the CSP's constraints that have one unassigned variable left in its scope. We comb through the forward checking process below. At each step, the domain of each variable, *i.e.*, {1 2 3}, is updated in its corresponding cell.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc00.png" width="180" /> 
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc00.png" width="180" title="Forward checking step 00"/> 
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc01.png" width="180" /> The constraint *V13*=3 has only one unassigned variable (*V13*). We do *V13*:=3. From *V11≠V12≠V13* we get *V11≠V13* and *V12≠V13*, both of which are now constraints with only one unassigned variable. Since *V13* is now 3, we can remove 3 from the domains of *V11* and *V13*. Given the non-equal column constraints, we do the same for variables *V23* and *V33*.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc01.png" width="180" title="Forward checking step 01"/> The constraint *V13*=3 has only one unassigned variable (*V13*). We do *V13*:=3. From *V11≠V12≠V13* we get *V11≠V13* and *V12≠V13*, both of which are now constraints with only one unassigned variable. Since *V13* is now 3, we can remove 3 from the domains of *V11* and *V13*. Given the non-equal column constraints, we do the same for variables *V23* and *V33*.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc02.png" width="180" /> Similarly, we assign *V31*:=3 and remove some values from the domains of *V31*'s row- and column-neighbours.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc02.png" width="180" title="Forward checking step 02"/> Similarly, we assign *V31*:=3 and remove some values from the domains of *V31*'s row- and column-neighbours.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc03.png" width="180" /> No constraints currently have one unassigned variable, so we pick one, *V11*, and assign a value - 1 - in its domain.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc03.png" width="180" title="Forward checking step 03"/> No constraints currently have one unassigned variable, so we pick one, *V11*, and assign a value - 1 - in its domain.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc04.png" width="180" /> *V11≠V12* now has only one unassigned variable - *V12*. The only possible value in its domain is 2.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc04.png" width="180" title="Forward checking step 04"/> *V11≠V12* now has only one unassigned variable - *V12*. The only possible value in its domain is 2.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc05.png" width="180" /> From the non-equal column constraints, we get the constraints *V11≠V21* and *V21≠V31*, which give *V21*=2.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc05.png" width="180" title="Forward checking step 05"/> From the non-equal column constraints, we get the constraints *V11≠V21* and *V21≠V31*, which give *V21*=2.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc06.png" width="180" /> We pick a value, 1, for *V22* from its domain. It follows that its neighbours, *V23* and *V32* have empty domains. We hit Domain Wipe-Out (DWO), so we step back.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc06.png" width="180" title="Forward checking step 06"/> We pick a value, 1, for *V22* from its domain. It follows that its neighbours, *V23* and *V32* have empty domains. We hit Domain Wipe-Out (DWO), so we step back.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc07.png" width="180" /> Instead of assigning 1, we assign 3 to *V22*. This falsifies the cage constraint *V21-V22*=|2|, so we have to step back further.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc07.png" width="180" title="Forward checking step 07"/> Instead of assigning 1, we assign 3 to *V22*. This falsifies the cage constraint *V21-V22*=|2|, so we have to step back further.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc08.png" width="180" /> We try assigning 2 to *V11*.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc08.png" width="180" title="Forward checking step 08"/> We try assigning 2 to *V11*.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc09.png" width="180" /> We choose a value from *V12*'s domain.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc09.png" width="180" title="Forward checking step 09"/> We choose a value from *V12*'s domain.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc10.png" width="180" /> Now we choose a value from *V21*'s domain.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc10.png" width="180" title="Forward checking step 10"/> Now we choose a value from *V21*'s domain.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc11.png" width="180" /> Now we choose a value from *V22*'s domain. We get DWO again, so we backtrack and try another value.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc11.png" width="180" title="Forward checking step 11"/> Now we choose a value from *V22*'s domain. We get DWO again, so we backtrack and try another value.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc12.png" width="180" /> We try assigning *V22*:=3.
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc12.png" width="180" title="Forward checking step 12"/> We try assigning *V22*:=3.
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc13.png" width="180" />
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc13.png" width="180" title="Forward checking step 13"/>
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc14.png" width="180" />
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc14.png" width="180" title="Forward checking step 14"/>
 
-<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc15.png" width="180" /> Solution found!
+<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc15.png" width="180" title="Forward checking step 15"/> Solution found!
 
 #### Search Space
-We find the solution in 15 steps.
+Forward checking finds the solution in 15 steps.
 
 <p align="center">
-   <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc_searchspace.png" width="340" />
+   <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc_searchspace.png" width="340" title="Forward checking search space"/>
 </p>
 
 ### Generalised Arc Consistence
