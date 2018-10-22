@@ -142,9 +142,10 @@ def nQueens(n):
     return csp
 
 # SPECIFY WHAT TO TEST
-TEST_MODELS      = True
-TEST_HEURISTICS  = True
-TEST_PROPAGATORS = True
+TEST_MODELS      = False
+TEST_HEURISTICS  = False
+TEST_PROPAGATORS = False
+TEST_FC          = True
 
 class TestStringMethods(unittest.TestCase):
     def helper_prop(self, board, prop=prop_FC, var_ord=ord_mrv):
@@ -152,7 +153,7 @@ class TestStringMethods(unittest.TestCase):
         solver = BT(csp)
         solver.quiet()
         solver.bt_search(prop, var_ord)
-        self.assertTrue(check_cages(var_array, board), "Incorect value in a cage!")
+        self.assertTrue(check_cages(var_array, board), "Incorrect value in a cage!")
         self.assertTrue(check_diff(var_array, board), "Repeated value in a row or column!")
 
     def helper_bne_grid(self, board):
@@ -262,6 +263,16 @@ class TestStringMethods(unittest.TestCase):
         pruned = propagators.prop_FC(queens,newVar=cur_var[4])
 
         self.assertFalse(pruned[0], "Failed a FC test: should have resulted in a DWO")
+
+    @unittest.skipUnless(TEST_FC, "Not Testing Forward Checking.")
+    def test_FC(self):
+        csp, var_array = kenken_csp_model([[3], [11, 12, 2, 2], [13, 3], [21, 22, 2, 1], [31, 3], [23, 32, 33, 4, 3]])
+        answer = [2, 1, 3, 1, 3, 2, 3, 2, 1]
+        solver = BT(csp)
+        solver.bt_search(prop_FC)
+        for i in range(len(csp.vars)):
+            self.assertEqual(csp.vars[i].get_assigned_value(), answer[i], 
+                "Failed simple FC test: assigned values don't match expected results")
 
 if __name__ == '__main__':
     unittest.main()

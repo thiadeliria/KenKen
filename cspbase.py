@@ -405,8 +405,8 @@ class BT:
     Use a class to encapsulate things like statistics and bookeeping for 
     pruning/unpruning variabel domains. To use the backtracking routine make one 
     of these objects passing the CSP as a parameter. Then you can invoke that 
-    objects's bt_search routine with the right kind or propagator function to 
-    obtain plain backtracking forward-checking or GAC.
+    objects's bt_search routine with the right kind of propagator function to 
+    obtain plain backtracking, forward-checking, or GAC.
     '''
 
     def __init__(self, csp):
@@ -469,12 +469,12 @@ class BT:
            csp is a CSP object---the propagator can use this to get access
            to the variables and constraints of the problem.
 
-           newly_instaniated_variable is an optional argument. 
+           newly_instantiated_variable is an optional argument. 
            if newly_instantiated_variable is not None:
                then newly_instantiated_variable is the most
                recently assigned variable of the search.
            else:
-               progator is called before any assignments are made
+               propagator is called before any assignments are made
                in which case it must decide what processing to do
                prior to any variables being assigned.
 
