@@ -76,12 +76,14 @@ def prop_FC(csp, newVar=None):
         #if only 1 var in constraint c's scope is unassigned
         if c.get_n_unasgn() == 1:
             v = c.get_unasgn_vars()[0]
+            # print("Evaluate %s in %s" % (v,c))
             
             #loop through list of [vals in current domain of unassigned var]
             for d in v.cur_domain(): #check d & prune if violates
                 
                 #assign d to value of unassigned var
                 v.assign(d)
+                # print("  Assign: %s := %d" % (v, d))
                 
                 #loop through scope of c, add variables' vals in scope order
                 vals = []
@@ -97,11 +99,13 @@ def prop_FC(csp, newVar=None):
                         #prune d from current domain (of v)
                         v.prune_value(d)
                         pruned.append((v, d))
+                        # print("    Prune: Dom(%s) - %d" % (v, d))
 
                 #unassign d
                 v.unassign()
                     
                 if v.cur_domain_size() == 0: #dead end reached
+                    # print("DWO: %s domain size 0" % (v))
                     return False, pruned
 
     return True, pruned
