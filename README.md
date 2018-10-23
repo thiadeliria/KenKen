@@ -71,9 +71,9 @@ In this problem, we have 9 variables *V11* to *V33*, each representing the value
 We apply propagation to detect possible failures in future value assignments during search. By "looking ahead" at unassigned variables, we can eliminate constraint-incompatible values. Once we find assignments that violate a constraint, we remove or "prune" those values from their corresponding domains.
 
 ### Forward Checking
-Implemented as `prop_fc` in propagators.py. The strategy is to check - as we fill in cells and eliminate unwanted values - the CSP's constraints that have one unassigned variable left in its scope. We comb through the forward checking process below. At each step, the domain of each variable, *i.e.*, {1 2 3}, is updated in its corresponding cell.
+Implemented as `prop_FC` in propagators.py. The strategy is to check - as we fill in cells and eliminate unwanted values - the CSP's constraints that have one unassigned variable left in its scope. We comb through the forward checking process below. At each step, the domain of each variable, *i.e.*, {1 2 3}, is updated in its corresponding cell.
 
-| Step | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Domain Pruning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation |
+| Step | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pruning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation |
 |---:|:---:|:---:|--------------------------|
 | 00 |<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc00.png" width="180" title="Forward checking step 00"/> | | Empty puzzle board.
 | 01 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc01.png" width="180" title="Forward checking step 01"/> |<img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc02.png" width="180" title="Forward checking step 01"/> | The constraint *V13*=3 has only one unassigned variable (*V13*). We do *V13*:=3. From *V11≠V12≠V13* we get *V11≠V13* and *V12≠V13*, both of which are now constraints with only one unassigned variable. Since *V13* is now 3, we can remove 3 from the domains of *V11* and *V13*. Given the non-equal column constraints, we do the same for variables *V23* and *V33*.
@@ -95,7 +95,6 @@ Implemented as `prop_fc` in propagators.py. The strategy is to check - as we fil
 | 17 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc31.png" width="180" title="Forward checking step 17"/> | | Solution found.
 
 #### Search Space
-Forward checking finds the solution in 15 steps.
 
 <p align="center">
    <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc_searchspace.png" width="340" title="Forward checking search space"/>
