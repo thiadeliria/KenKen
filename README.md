@@ -100,6 +100,8 @@ Forward checking finds the solution in 15 steps.
 </p>
 
 ### Generalised Arc Consistence
-Implemented as `prop_gac` in propagators.py. Generalised Arc Consistence (GAC) employs propagation to make each arc in a constraint graph consistent. We initialise the GAC queue with all relevant constraints of the CSP.
+Implemented as `prop_GAC` in propagators.py. Generalised Arc Consistence (GAC) is concerned with consistency. A CSP is GAC if all its constraints are GAC. A constraint is GAC if there is some combination of values that, when assigned, satisfies the constraint. *e.g.*, If we find a solution that fills in every cell and satisfies all of a KenKen puzzle's row, column, and cage constraints, this puzzle is GAC.
+
+GAC employs propagation to make each arc in a constraint graph consistent. We find inconsistencies and remove them by pruning the offending values from the domains of variables. Since these values are arc-inconsistent, they do not constitute a solution, so we eliminate them altogether.
 
 ## Heuristics
