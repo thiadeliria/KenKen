@@ -4,9 +4,9 @@ This file contains constraint propagators to be used within bt_search.
 A propagator is a function with the following header
     propagator(csp, newly_instantiated_variable=None)
 
-csp is a CSP object---the propagator can use this to get access to the variables 
-and constraints of the problem. The assigned variables can be accessed via 
-methods, the values assigned can also be accessed.
+csp is a CSP object - the propagator can use this to get access to the 
+variables and constraints of the problem. The assigned variables and values
+can be accessed via methods.
 
 newly_instantiated_variable is an optional argument.
 if newly_instantiated_variable is not None:
@@ -17,15 +17,15 @@ else:
     in which case it must decide what processing to do
     prior to any variables being assigned. 
 
-The propagator returns True/False and a list of (Variable, Value) pairs, like so
-    (True/False, [(Variable, Value), (Variable, Value) ...]
+The propagator returns True/False and a list of (Variable, Value) pairs.
 
-Propagators will return False if they detect a dead-end. In this case, bt_search 
-will backtrack. Propagators will return true if we can continue.
+Propagators will return False if they detect a dead-end. In this case, 
+bt_search will backtrack. Propagators will return True if we can continue.
 
 The list of variable-value pairs are all of the values that the propagator 
-pruned (using the variable's prune_value method). bt_search needs to know this 
-in order to correctly restore these values when it undoes a variable assignment.
+pruned (using the variable's prune_value method). bt_search needs to know 
+this in order to correctly restore these values when it undoes a variable 
+assignment.
 
 '''
 
@@ -76,14 +76,12 @@ def prop_FC(csp, newVar=None):
         #if only 1 var in constraint c's scope is unassigned
         if c.get_n_unasgn() == 1:
             v = c.get_unasgn_vars()[0]
-            # print("Evaluate %s in %s" % (v,c))
             
             #loop through list of [vals in current domain of unassigned var]
             for d in v.cur_domain(): #check d & prune if violates
                 
                 #assign d to value of unassigned var
                 v.assign(d)
-                # print("  Assign: %s := %d" % (v, d))
                 
                 #loop through scope of c, add variables' vals in scope order
                 vals = []
@@ -99,13 +97,11 @@ def prop_FC(csp, newVar=None):
                         #prune d from current domain (of v)
                         v.prune_value(d)
                         pruned.append((v, d))
-                        # print("    Prune: Dom(%s) - %d" % (v, d))
 
                 #unassign d
                 v.unassign()
                     
                 if v.cur_domain_size() == 0: #dead end reached
-                    # print("DWO: %s domain size 0" % (v))
                     return False, pruned
 
     return True, pruned
@@ -149,4 +145,3 @@ def prop_GAC(csp, newVar=None):
                     return False, pruned
 
     return True, pruned
-
