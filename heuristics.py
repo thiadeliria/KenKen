@@ -14,7 +14,7 @@ bt_search.
       choice to worst value choice according to the LCV heuristic.
 
 The heuristics can use the csp argument (CSP object) to get access to the 
-variables and constraints of the problem. The assigned variables and values can 
+variables and constraints of the problem. The assigned variables and values can
 be accessed via methods.
 '''
 
@@ -25,12 +25,11 @@ import operator
 
 def ord_dh(csp):
     '''
-    A variable ordering heuristic that chooses the next variable to
+    A variable-ordering heuristic that chooses the next variable to
     be assigned according to the Degree heuristic (DH). ord_dh returns
     the variable that is involved in the largest number of constraints
     on other unassigned variables.
     '''
-    # TODO! IMPLEMENT THIS!
     count = {} #count[var] = no. of links to unasg'd vars across 
                 #all constraints
     
@@ -60,12 +59,11 @@ def ord_dh(csp):
 
 def ord_mrv(csp):
     '''
-    A variable ordering heuristic that chooses the next variable to be
+    A variable-ordering heuristic that chooses the next variable to be
     assigned according to the Minimum-Remaining-Value heuristic.
     ord_mrv returns the variable with the most constrained current
     domain (i.e., the variable with the fewest legal values).
     '''
-    # TODO! IMPLEMENT THIS!
     vars = csp.get_all_unasgn_vars() #list of [unassigned vars] in CSP
     
     #assign first var in vars to mrv_var
@@ -89,7 +87,6 @@ def val_lcv(csp, var):
     the variable that gives the most flexibility later on) to the value
     that rules out the most.
     '''
-    # TODO! IMPLEMENT THIS!
     vals = []
     count = {} #count[val] = no. of resulting neighbour prunes
         
