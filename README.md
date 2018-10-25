@@ -20,7 +20,6 @@ Additionally, the following heuristics are implemented in heuristics.py:
     * [Forward Checking](https://github.com/thiadeliria/KenKen#forward-checking)
          * [Search Space](https://github.com/thiadeliria/KenKen#search-space)
     * [Generalised Arc Consistence](https://github.com/thiadeliria/KenKen#generalised-arc-consistence)
-* [Heuristics](https://github.com/thiadeliria/KenKen#heuristics)
         
 ## How to Play KenKen
 KenKen (also known as Kashikoku-Naru-Puzzle or 賢くなるパズル) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3×3 grid.
@@ -103,6 +102,5 @@ Implemented as `prop_FC` in propagators.py. The strategy is to check - as we fil
 ### Generalised Arc Consistence
 Implemented as `prop_GAC` in propagators.py. Generalised Arc Consistence (GAC) is concerned with consistency. A CSP is GAC if all its constraints are GAC. A constraint is GAC if there is some combination of values that, when assigned, satisfies the constraint. *e.g.*, If we find a solution that fills in every cell and satisfies all of a KenKen puzzle's row, column, and cage constraints, this puzzle is GAC.
 
-GAC employs propagation to make each arc in a constraint graph consistent. We find inconsistencies and remove them by pruning the offending values from the domains of variables. Since these values are arc-inconsistent, they do not constitute a solution, so we eliminate them altogether.
+GAC employs propagation to make each arc in a constraint graph consistent. We find inconsistencies and remove them by pruning the offending values from the domains of variables. Values that are arc-inconsistent do not constitute a solution, so we eliminate them altogether.
 
-## Heuristics
