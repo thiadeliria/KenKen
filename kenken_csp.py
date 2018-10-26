@@ -17,14 +17,6 @@ All models return a CSP object, and a list of lists of Variable objects
 representing the board. The returned list of lists is used to access the 
 solution. 
 
-For example, after these three lines of code
-
-    csp, var_array = kenken_csp_model(board)
-    solver = BT(csp)
-    solver.bt_search(prop_FC, var_ord)
-
-var_array[0][0].get_assigned_value() should be the correct value in the top 
-left cell of the KenKen puzzle.
 '''
 import itertools
 from cspbase import *
