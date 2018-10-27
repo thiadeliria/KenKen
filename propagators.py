@@ -126,7 +126,6 @@ def prop_GAC(csp, newVar=None):
     else: #check all constraints
         constraints = csp.get_all_cons()
 
-    #find constraints whose scope contains v
     for c in constraints:
         for v in c.get_scope():
         
@@ -136,7 +135,6 @@ def prop_GAC(csp, newVar=None):
                 #test if (var, val) pair has supporting tuple in c
                 if not c.has_support(v, d): #prune d from current domain (of v)
                     
-                    #if d is in current domain (of v) && v not yet pruned
                     if (v.in_cur_domain(d)) and ((v, d) not in pruned):
                         v.prune_value(d)
                         pruned.append((v, d))
