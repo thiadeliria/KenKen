@@ -70,8 +70,7 @@ def prop_FC(csp, newVar=None):
     else: #check all constraints
         constraints = csp.get_all_cons()
 
-    #loop through list of constraints
-    for c in constraints: #find ones that have only 1 unassigned var
+    for c in constraints:
         
         #if only 1 var in constraint c's scope is unassigned
         if c.get_n_unasgn() == 1:
@@ -87,7 +86,6 @@ def prop_FC(csp, newVar=None):
                 vals = []
                 vars = c.get_scope()
                 for var in vars:
-                    #append var's assigned value to vals
                     vals.append(var.get_assigned_value())
                 
                 #if vals assignments don't satisfy constraint c
@@ -101,7 +99,7 @@ def prop_FC(csp, newVar=None):
                 #unassign d
                 v.unassign()
                     
-                if v.cur_domain_size() == 0: #dead end reached
+                if v.cur_domain_size() == 0: #DWO
                     return False, pruned
 
     return True, pruned
@@ -133,13 +131,14 @@ def prop_GAC(csp, newVar=None):
             for d in v.cur_domain():
 
                 #test if (var, val) pair has supporting tuple in c
-                if not c.has_support(v, d): #prune d from current domain (of v)
+                if not c.has_support(v, d):
                     
                     if (v.in_cur_domain(d)) and ((v, d) not in pruned):
+                        #prune d from current domain (of v)
                         v.prune_value(d)
                         pruned.append((v, d))
                 
-                if v.cur_domain_size() == 0: #dead end reached
+                if v.cur_domain_size() == 0: #DWO
                     return False, pruned
 
     return True, pruned
