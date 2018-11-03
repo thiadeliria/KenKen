@@ -104,3 +104,7 @@ Implemented as `prop_GAC` in propagators.py. Generalised Arc Consistence (GAC) i
 
 GAC employs propagation to make each arc in a constraint graph consistent. We find inconsistencies and remove them by pruning the offending values from the domains of variables. Values that are arc-inconsistent do not constitute a solution, so we eliminate them altogether.
 
+| Step | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pruning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation |
+|---:|:---:|:---:|--------------------------|
+| 00 |<img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac00.png" title="GAC step 00"/> | | Empty puzzle board.
+| 01 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc01.png" title="GAC step 01"/> |<img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac01p.png" title="GAC step 01"/> | We prune inconsistent values from variables in the scope of constraints over *V11*. All other variables have arc-consistent values in their domains.
