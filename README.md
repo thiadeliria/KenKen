@@ -114,6 +114,6 @@ GAC employs propagation to make each arc in a constraint graph consistent. We fi
 | 05 | *V21*:=1 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac05.png" title="GAC step 05"/> | 
 | 06 | *V22*:=3 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac06.png" title="GAC step 06"/> | 
 | 07 | *V23*:=2 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac07.png" title="GAC step 07"/> | 
-| 08 | *V33*:=3 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac08p.png" title="GAC step 08"/> | 
+| 08 | *V33*:=3 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac08.png" title="GAC step 08"/> | 
 | 09 | *V32*:=2 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac09.png" title="GAC step 09"/> | 
 | 10 | *V33*:=1 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac10.png" title="GAC step 10"/> | 
