@@ -107,5 +107,13 @@ GAC employs propagation to make each arc in a constraint graph consistent. We fi
 | Step | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Board&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation |
 |:-:|:---:|:---:|--------------------------|
 | 00 | | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac00.png" title="GAC step 00"/> | Empty puzzle board.
-| 01 | | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac01p.png" title="GAC step 01"/> | We prune inconsistent values from variables in the scope of constraints over *V11*. All other variables have arc-consistent values in their domains.
-| 02 | | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac02p.png" title="GAC step 02"/> | Assigning *V12*=2 means *V13* can no longer have the value 2. This leaves only 3 in *V13*'s domain. Since there is a column constraint over *V13, V23, V33*, the value 3 is now also arc-inconsistent if assigned to *V23* and *V33*. We prune it from their domains too.
+| 01 | *V11*:=1 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac01p.png" title="GAC step 01"/> | We prune inconsistent values from domains of variables in the scopes of constraints over *V11*. Then we consider the constraints C' over those affected variables and prune the variables involved in C'.
+| 02 | *V11*:=2 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac02p.png" title="GAC step 02"/> | 
+| 03 | *V12*:=1 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac03.png" title="GAC step 03"/> | 
+| 04 | *V13*:=3 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac04.png" title="GAC step 04"/> | 
+| 05 | *V21*:=1 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac05.png" title="GAC step 05"/> | 
+| 06 | *V22*:=3 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac06.png" title="GAC step 06"/> | 
+| 07 | *V23*:=2 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac07.png" title="GAC step 07"/> | 
+| 08 | *V33*:=3 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac08p.png" title="GAC step 08"/> | 
+| 09 | *V32*:=2 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac09.png" title="GAC step 09"/> | 
+| 10 | *V33*:=1 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac10.png" title="GAC step 10"/> | 
