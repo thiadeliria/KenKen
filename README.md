@@ -72,7 +72,7 @@ We apply propagation to detect possible failures in future value assignments dur
 ### Forward Checking
 Implemented as `prop_FC` in propagators.py. The strategy is to check - as we fill in cells and eliminate unwanted values - the CSP's constraints that have one unassigned variable left in its scope. We walk through the forward checking process below. At each step, the domain of each variable, *i.e.*, {1 2 3}, is updated in its corresponding cell.
 
-| Step | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Board&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation |
+| Step | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Board&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation |
 |:-:|:---:|:---:|--------------------------|
 | 00 | | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc00.png" title="Forward checking step 00"/> | Empty puzzle board.
 | 01 | *V11*:=1 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc01p.png" title="Forward checking step 01"/> | We pick an unassigned variable, *V11*, and try assigning a value in its domain. Then we check the constraints involving *V11* and one other unassigned variable, pruning the values that falsify those constraints. Given *V11*=1, *e.g.*, *V12*=3 violates the cage constraint over *V11* and *V12*, so we remove 3 from *V12*'s domain.
@@ -104,8 +104,8 @@ Implemented as `prop_GAC` in propagators.py. Generalised Arc Consistence (GAC) i
 
 GAC employs propagation to make each arc in a constraint graph consistent. We find inconsistencies and remove them by pruning the offending values from the domains of variables. Values that are arc-inconsistent do not constitute a solution, so we eliminate them altogether.
 
-| Step | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pruning&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation |
-|---:|:---:|:---:|--------------------------|
-| 00 |<img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac00.png" title="GAC step 00"/> | | Empty puzzle board.
-| 01 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac01.png" title="GAC step 01"/> |<img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac01p.png" title="GAC step 01"/> | We prune inconsistent values from variables in the scope of constraints over *V11*. All other variables have arc-consistent values in their domains.
-| 02 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac02.png" title="GAC step 02"/> |<img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac02p.png" title="GAC step 02"/> | Assigning *V12*=2 means *V13* can no longer have the value 2. This leaves only 3 in *V13*'s domain. Since there is a column constraint over *V13, V23, V33*, the value 3 is now also arc-inconsistent if assigned to *V23* and *V33*. We prune it from their domains too.
+| Step | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Board&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation |
+|:-:|:---:|:---:|--------------------------|
+| 00 | | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac00.png" title="GAC step 00"/> | Empty puzzle board.
+| 01 | | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac01p.png" title="GAC step 01"/> | We prune inconsistent values from variables in the scope of constraints over *V11*. All other variables have arc-consistent values in their domains.
+| 02 | | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac02p.png" title="GAC step 02"/> | Assigning *V12*=2 means *V13* can no longer have the value 2. This leaves only 3 in *V13*'s domain. Since there is a column constraint over *V13, V23, V33*, the value 3 is now also arc-inconsistent if assigned to *V23* and *V33*. We prune it from their domains too.
