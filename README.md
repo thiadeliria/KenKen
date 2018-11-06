@@ -18,8 +18,9 @@ Additionally, the following heuristics are implemented in heuristics.py:
 * [Constraint Satisfaction Problems (CSPs)](https://github.com/thiadeliria/KenKen#csps)
 * [Constraint Propagation](https://github.com/thiadeliria/KenKen#constraint-propagation)
     * [Forward Checking](https://github.com/thiadeliria/KenKen#forward-checking)
-         * [Search Space](https://github.com/thiadeliria/KenKen#search-space)
+         * [Search Space](https://github.com/thiadeliria/KenKen#fc-search-space)
     * [Generalised Arc Consistence](https://github.com/thiadeliria/KenKen#generalised-arc-consistence)
+         * [Search Space](https://github.com/thiadeliria/KenKen#gac-search-space)
         
 ## How to Play KenKen
 KenKen (also known as Kashikoku-Naru-Puzzle or 賢くなるパズル) is a puzzle game designed to improve your math skills. Similar to Sudoku, the objective is to fill an *n* × *n* grid of cells with digits 1 to *n*. For example, here is a 3×3 grid.
@@ -70,7 +71,7 @@ In this problem, we have 9 variables *V11* to *V33*, each representing the value
 We apply propagation to detect possible failures in future value assignments during search. By "looking ahead" at unassigned variables, we can eliminate constraint-incompatible values. Once we find assignments that violate a constraint, we remove or "prune" those values from their corresponding domains.
 
 ### Forward Checking
-Implemented as `prop_FC` in propagators.py. The strategy is to check - as we fill in cells and eliminate unwanted values - the CSP's constraints that have one unassigned variable left in its scope. We walk through the forward checking process below. At each step, the domain of each variable, *i.e.*, {1 2 3}, is updated in its corresponding cell.
+Implemented as `prop_FC` in propagators.py. The strategy of forward checking (FC) is to check - as we fill in cells and eliminate unwanted values - the CSP's constraints that have one unassigned variable left in its scope. We walk through the forward checking process below. At each step, the domain of each variable, *i.e.*, {1 2 3}, is updated in its corresponding cell.
 
 | Step | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Assignment&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Board&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | Explanation |
 |:-:|:---:|:---:|--------------------------|
@@ -93,7 +94,7 @@ Implemented as `prop_FC` in propagators.py. The strategy is to check - as we fil
 | 16 | *V32*:=2 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc16.png" title="Forward checking step 16"/> |
 | 17 | *V33*:=1 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc17.png" title="Forward checking step 17"/> | Solution found.
 
-#### Search Space
+#### FC Search Space
 
 <p align="center">
    <img src="https://github.com/thiadeliria/KenKen/blob/master/images/fc_searchspace.png" width="340" title="Forward checking search space"/>
@@ -117,3 +118,9 @@ GAC employs propagation to make each arc in a constraint graph consistent. We fi
 | 08 | *V33*:=3 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac08.png" title="GAC step 08"/> | 
 | 09 | *V32*:=2 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac09.png" title="GAC step 09"/> | 
 | 10 | *V33*:=1 | <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac10.png" title="GAC step 10"/> | 
+
+#### GAC Search Space
+
+<p align="center">
+   <img src="https://github.com/thiadeliria/KenKen/blob/master/images/gac_searchspace.png" width="170" title="GAC search space"/>
+</p>
